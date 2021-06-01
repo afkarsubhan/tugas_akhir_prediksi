@@ -170,7 +170,7 @@ class Model_data extends CI_Model
 	{
 		$query = $this->db->get_where($table, $where);
 		return $query->result_array();
-	}
+	} 
 
 
 	function upload_file($filename){

@@ -143,8 +143,9 @@
 
         </div>
         <div class="modal-footer">
-                
-        <a type="button" class="warna" href="<?php echo base_url('admin/c_produk/tampil_import_produk') ?>">Import Data From Excel</a>
+        <a href=<?php echo base_url('admin/C_produk/tampil_import_produk') ?> class="btn btn-warning" style="padding-right:65px">
+                    <i class="">Import Data From Excel</i>
+            </a>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Save changes</button>
         </div>

@@ -121,7 +121,7 @@ class C_produk extends CI_Controller
 
         $this->load->view('admin/v_admin_side_navbar', $ambil_data_barang);
         $this->load->view('admin/v_admin_top_navbar');
-        $this->load->view('admin/v_admin_import');
+        $this->load->view('admin/v_admin_import_produk');
     }
 
 
@@ -129,8 +129,8 @@ class C_produk extends CI_Controller
     public function form(){
         $data = array(); // Buat variabel $data sebagai array
         if(isset($_POST['preview'])){ // Jika user menekan tombol Preview pada form
-        // lakukan upload file dengan memanggil function upload yang ada di SiswaModel.php
-        $upload = $this->SiswaModel->upload_file($this->filename);    
+        // lakukan upload file dengan memanggil function upload
+        $upload = $this->model_data->upload_file($this->filename);    
             if($upload['result'] == "success"){ // Jika proses upload sukses
               // Load plugin PHPExcel nya
               include APPPATH.'third_party/PHPExcel/PHPExcel.php';
@@ -145,7 +145,7 @@ class C_produk extends CI_Controller
             }
           }
           
-          $this->load->view('form', $data);
+          $this->load->view('tampil_import_produk', $data);
         }
         
         public function import(){
@@ -158,7 +158,7 @@ class C_produk extends CI_Controller
           
           // Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database
           $data = array();
-          
+           
           $numrow = 1;
           foreach($sheet as $row){
             // Cek $numrow apakah lebih dari 1
@@ -175,8 +175,8 @@ class C_produk extends CI_Controller
             $numrow++; // Tambah 1 setiap kali looping
           }
           // Panggil fungsi insert_multiple yg telah kita buat sebelumnya di model
-          $this->SiswaModel->insert_multiple($data);
+          $this->model_data->insert_multiple($data);
           
-          redirect("admin/c_produk/tampil_produk_all"); // Redirect ke halaman awal (ke controller siswa fungsi index)
+          redirect("admin/c_produk/tampil_produk_all"); // Redirect ke halaman awal 
         }
 }
