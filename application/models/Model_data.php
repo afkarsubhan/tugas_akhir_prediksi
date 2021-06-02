@@ -197,4 +197,23 @@ class Model_data extends CI_Model
 	function insert_multiple_produk($data){
 		$this->db->insert_batch('produk', $data);
 	  }
+
+	function insert_multiple_kode_barang($data){			
+		$data_kode_barang = array();
+		foreach($data as $row){
+			$where = array(
+				'kode_barang' =>  $row
+			);
+	
+			$cek = $this->tampil_data_kondisi('barang', $where);			
+			if($cek == null){
+				array_push($data_kode_barang, array(                
+					'kode_barang'=>$row, // Insert data nama dari kolom B di excel
+				));       
+			}			
+		}
+		if($data_kode_barang != null){
+			$this->db->insert_batch('barang', $data_kode_barang);
+		}		
+	}
 }

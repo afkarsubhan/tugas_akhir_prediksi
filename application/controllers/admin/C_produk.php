@@ -2,6 +2,7 @@
 
 class C_produk extends CI_Controller
 {
+    private $filename = "import_data_produk";
     function index()
     {
         $ambil_data_barang['data_barang'] = $this->model_data->tampil_data('barang');
@@ -129,26 +130,37 @@ class C_produk extends CI_Controller
     public function form(){
         $data = array(); // Buat variabel $data sebagai array
         if(isset($_POST['preview'])){ // Jika user menekan tombol Preview pada form
-        // lakukan upload file dengan memanggil function upload
-        $upload = $this->model_data->upload_file($this->filename);    
+            // lakukan upload file dengan memanggil function upload
+            $upload = $this->model_data->upload_file($this->filename);    
             if($upload['result'] == "success"){ // Jika proses upload sukses
               // Load plugin PHPExcel nya
               include APPPATH.'third_party/PHPExcel/PHPExcel.php';
               $excelreader = new PHPExcel_Reader_Excel2007();
               $loadexcel = $excelreader->load('excel/'.$this->filename.'.xlsx'); // Load file yang tadi diupload ke folder excel
-              $sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);
+              $sheet = $loadexcel->getActiveSheet()->toArray(null, true, true ,true);              
               // Masukan variabel $sheet ke dalam array data yang nantinya akan di kirim ke file form.php
               // Variabel $sheet tersebut berisi data-data yang sudah diinput di dalam excel yang sudha di upload sebelumnya
               $data['sheet'] = $sheet; 
             }else{ // Jika proses upload gagal
               $data['upload_error'] = $upload['error']; // Ambil pesan error uploadnya untuk dikirim ke file form dan ditampilkan
             }
-          }
+          }                    
+          $ambil_data_barang['data_barang'] = $this->model_data->tampil_data('barang');
+          $id_produk = $this->input->get('id_produk');
+
+          $where = array(
+            'id_produk' =>  $id_produk
+          );
+
+          $ambil_data['data'] = $this->model_data->tampil_data_kondisi('produk', $where);
+          $this->load->view('admin/v_admin_side_navbar', $ambil_data_barang);
+          $this->load->view('admin/v_admin_top_navbar');
           
-          $this->load->view('tampil_import_produk', $data);
+          $this->load->view('admin/v_admin_import_produk', $data);          
         }
         
-        public function import(){
+        public function import(){                    
+
           // Load plugin PHPExcel nya
           include APPPATH.'third_party/PHPExcel/PHPExcel.php';
           
@@ -158,6 +170,8 @@ class C_produk extends CI_Controller
           
           // Buat sebuah variabel array untuk menampung array data yg akan kita insert ke database
           $data = array();
+          $unique_kode_barang = array();
+        //   $data_kode_barang = array();
            
           $numrow = 1;
           foreach($sheet as $row){
@@ -170,13 +184,20 @@ class C_produk extends CI_Controller
                 'nama_produk'=>$row['A'], // Insert data nis dari kolom A di excel
                 'kode_barang'=>$row['B'], // Insert data nama dari kolom B di excel
               ));
+              array_push($unique_kode_barang,                 
+                $row['B'], // Insert data nama dari kolom B di excel
+              );
             }
             
             $numrow++; // Tambah 1 setiap kali looping
           }
+
+          $unique_kode_barang = array_unique($unique_kode_barang);          
+
           // Panggil fungsi insert_multiple yg telah kita buat sebelumnya di model
-          $this->model_data->insert_multiple($data);
+          $this->model_data->insert_multiple_produk($data);
+          $this->model_data->insert_multiple_kode_barang($unique_kode_barang);
           
-          redirect("admin/c_produk/tampil_produk_all"); // Redirect ke halaman awal 
+          redirect("admin/C_produk/tampil_produk_all"); // Redirect ke halaman awal 
         }
-}
+    }
