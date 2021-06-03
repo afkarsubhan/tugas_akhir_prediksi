@@ -32,8 +32,20 @@
 
                             <form action="id_produk=" method="post">
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Kategori Barang</label>
+                                    <select class="form-control" id="pilih_kategori" name="list_id_kategori">
+                                        <?php
+                                        foreach ($data_barang as $ct) {
+                                        ?>
+                                            <option value="<?php echo $ct['kode_barang'] ?>"><?php echo $ct['kode_barang'] ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Name Produk</label>
-                                    <select class="form-control" id="pilih_produk" onchange="myFunction()" name="list_id_produk">
+                                    <select class="form-control" id="pilih_produk" name="list_id_produk">
                                         <?php
                                         foreach ($produk as $ct) {
                                         ?>
@@ -44,80 +56,6 @@
                                     </select>
                                 </div>
                                 <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <div class="col">
-                                                <label for="exampleFormControlSelect1">Dari Tahun</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option value=>-----</option>
-                                                    <option value=2017>2017</option>
-                                                    <option value=2018>2018</option>
-                                                    <option value=2019>2019</option>
-                                                    <option value=2020>2020</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <div class="col">
-                                                <label for="exampleFormControlSelect1">Bulan</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option value=>-----</option>
-                                                    <option value=januari>Januari</option>
-                                                    <option value=februari>Februari</option>
-                                                    <option value=maret>Maret</option>
-                                                    <option value=april>April</option>
-                                                    <option value=mei>Mei</option>
-                                                    <option value=juni>Juni</option>
-                                                    <option value=juli>Juli</option>
-                                                    <option value=agustus>Agustus</option>
-                                                    <option value=september>September</option>
-                                                    <option value=oktober>Oktober</option>
-                                                    <option value=november>November</option>
-                                                    <option value=desember>Desember</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="w-100"></div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <div class="col">
-                                                <label for="exampleFormControlSelect1">Sampai Tahun</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option value=>-----</option>
-                                                    <option value=2017>2017</option>
-                                                    <option value=2018>2018</option>
-                                                    <option value=2019>2019</option>
-                                                    <option value=2020>2020</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <div class="col">
-                                                <label for="exampleFormControlSelect1">Bulan</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option value=>-----</option>
-                                                    <option value=januari>Januari</option>
-                                                    <option value=februari>Februari</option>
-                                                    <option value=maret>Maret</option>
-                                                    <option value=april>April</option>
-                                                    <option value=mei>Mei</option>
-                                                    <option value=juni>Juni</option>
-                                                    <option value=juli>Juli</option>
-                                                    <option value=agustus>Agustus</option>
-                                                    <option value=september>September</option>
-                                                    <option value=oktober>Oktober</option>
-                                                    <option value=november>November</option>
-                                                    <option value=desember>Desember</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="w-100"></div>
                                     <div class="col">
                                         <div class="form-group">
                                             <div class="col">
@@ -180,11 +118,28 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <script>
-        function myFunction() {
-            var x = document.getElementById("pilih_produk").value;
-            console.log("masuk ngaceng", x);
-        }
+    <script>        
+        $(document).ready(function(){
+        $('#pilih_kategori').change(function(){            
+            var id=$(this).val();            
+            $.ajax({
+                url : "<?php echo base_url();?>admin/Admin/get_produk_by_kode_barang",
+                method : "POST",
+                data : {id: id},
+                async : false,
+                dataType : 'json',
+                success: function(data){
+                    var html = '';
+                    var i;            
+                    for(i=0; i<data.length; i++){
+                        html += '<option>'+data[i].nama_produk+'</option>';
+                    }
+                    $('#pilih_produk').html(html);
+                     
+                }
+            });
+        });
+        });   
     </script>
 
     <script src="<?php echo base_url(); ?>assets/admin/vendor/jquery/jquery.min.js"></script>

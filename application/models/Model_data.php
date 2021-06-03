@@ -14,6 +14,17 @@ class Model_data extends CI_Model
 		return $data;
 	}
 
+	function data_produk_prediksi($where)
+	{
+		$this->db->select('*');
+		$this->db->from('produk');
+		$this->db->join('barang', 'barang.kode_barang=produk.kode_barang');
+		$this->db->where($where);
+		$query = $this->db->get();
+		$data = $query->result();
+		return $data;
+	}
+
 	function data_produk_all()
 	{
 		$this->db->select('*');
@@ -65,7 +76,7 @@ class Model_data extends CI_Model
 	//menjumlahkan penjualan 
 	function jumlahPenjualan()
 	{
-		$sql = "SELECT sum(Jumlah) as total FROM penjualan";
+		$sql = "SELECT sum(jumlah_penjualan) as total FROM penjualan";
 		$result = $this->db->query($sql);
 		return $result->result_array()[0]['total'];
 	}
