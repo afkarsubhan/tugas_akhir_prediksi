@@ -28,7 +28,7 @@
           <span>Dashboard</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" href="<?php echo base_url('admin/admin/list_data_selectionprediksi') ?>">
+        <a class="nav-link" href="<?php echo base_url('admin/C_prediksi/list_data_selectionprediksi') ?>">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Prediction</span></a>
       </li>

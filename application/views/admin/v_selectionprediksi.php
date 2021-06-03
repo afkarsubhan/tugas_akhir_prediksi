@@ -12,6 +12,47 @@
     <link href="<?php echo base_url(); ?>assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/admin/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
     <link href="<?php echo base_url(); ?>assets/admin/css/ruang-admin.min.css" rel="stylesheet">
+    <script type="text/javascript">
+        $(function() {
+
+            $.ajaxSetup({
+                type: "POST",
+                url: "<?php echo base_url('index.php/select/ambil_data') ?>",
+                cache: false,
+            });
+
+            $("#Kategori_produk").change(function() {
+
+                var value = $(this).val();
+                if (value > 0) {
+                    $.ajax({
+                        data: {
+                            modul: 'kabupaten',
+                            id: value
+                        },
+                        success: function(respond) {
+                            $("#kabupaten-kota").html(respond);
+                        }
+                    })
+                }
+
+            });
+            $("#produk").change(function() {
+                var value = $(this).val();
+                if (value > 0) {
+                    $.ajax({
+                        data: {
+                            modul: 'kecamatan',
+                            id: value
+                        },
+                        success: function(respond) {
+                            $("#kecamatan").html(respond);
+                        }
+                    })
+                }
+            })
+        })
+    </script>
 </head>
 
 <body id="page-top">
@@ -21,7 +62,6 @@
         <div class="container-fluid" id="container-wrapper">
             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                 <h1 class="h3 mb-0 text-gray-800">Form Prediksi</h1>
-
             </div>
 
             <div class="row">
@@ -34,6 +74,7 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Kategori Barang</label>
                                     <select class="form-control" id="pilih_kategori" name="list_id_kategori">
+                                        <option value="">Pilih Kategori Barang</option>
                                         <?php
                                         foreach ($data_barang as $ct) {
                                         ?>
@@ -45,7 +86,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Name Produk</label>
-                                    <select class="form-control" id="pilih_produk" name="list_id_produk">
+                                    <select class="form-control" id="pilih_produk" name="list_id_produk" disabled>
+                                        <option value="">Pilih Produk</option>
                                         <?php
                                         foreach ($produk as $ct) {
                                         ?>
@@ -70,45 +112,24 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <div class="col">
-                                                <label for="exampleFormControlSelect1">Bulan</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option value=>-----</option>
-                                                    <option value=januari>Januari</option>
-                                                    <option value=februari>Februari</option>
-                                                    <option value=maret>Maret</option>
-                                                    <option value=april>April</option>
-                                                    <option value=mei>Mei</option>
-                                                    <option value=juni>Juni</option>
-                                                    <option value=juli>Juli</option>
-                                                    <option value=agustus>Agustus</option>
-                                                    <option value=september>September</option>
-                                                    <option value=oktober>Oktober</option>
-                                                    <option value=november>November</option>
-                                                    <option value=desember>Desember</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <br>
-                                <button type="submit" class="btn btn-primary">Trend Projection</button>
-                            </form>
+                                </div>                                
 
                         </div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Trend Projection</button>
+                        </form>
+
                     </div>
                 </div>
             </div>
-            <!--Row-->
-
-
-            <!-- Documentation Link -->
-
         </div>
-        <!---Container Fluid-->
+        <!--Row-->
+
+
+        <!-- Documentation Link -->
+
+    </div>
+    <!---Container Fluid-->
     </div>
     </div>
     </div>
@@ -123,12 +144,13 @@
         $('#pilih_kategori').change(function(){            
             var id=$(this).val();            
             $.ajax({
-                url : "<?php echo base_url();?>admin/Admin/get_produk_by_kode_barang",
+                url : "<?php echo base_url();?>admin/C_prediksi/get_produk_by_kode_barang",
                 method : "POST",
                 data : {id: id},
                 async : false,
                 dataType : 'json',
                 success: function(data){
+                    $('#pilih_produk').prop("disabled", false);
                     var html = '';
                     var i;            
                     for(i=0; i<data.length; i++){
