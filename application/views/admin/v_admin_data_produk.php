@@ -14,25 +14,36 @@
   <link href="<?php echo base_url(); ?>assets/admin/css/ruang-admin.min.css" rel="stylesheet">
   <link href="<?php echo base_url(); ?>assets/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
+<style>
+  .warna {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+  }
+</style>
+
 
 <body id="page-top">
   <div id="wrapper">
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <?php foreach ($produk as $ct) { ?>
-          <h1 class="h3 mb-0 text-gray-800">Data Penjualan <?php echo $ct['nama_produk'] ?> </h1>
-        <?php
-        }
-        ?>
-        <button class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#tambahmembers" id="#modalCenter">
-          <span class="icon text-white-50">
-            <i class="fas fa-arrow-right"></i>
-          </span>
-          <span class="text">Added Category</span>
-        </button>
+        <h1 class="h3 mb-0 text-gray-800">Data Produk</h1>
+        <ol class="breadcrumb">
 
-
+          <button href="#" class="btn btn-primary btn-icon-split" data-toggle="modal" data-target="#tambahproduk" id="#modalCenter">
+            <span class="icon text-white-50">
+              <i class="fas fa-arrow-right"></i>
+            </span>
+            <span class="text">Tambah Produk</span>
+          </button>
+        </ol>
       </div>
 
       <!-- Row -->
@@ -44,41 +55,39 @@
               <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                 <thead class="thead-light">
                   <tr>
-                    <th>Nomor</th>
-                    <!-- <th>Id Category Case</th> -->
-                    <th>Bulan Penjualan</th>
-                    <th>Tahun Penjualan</th>
-                    <th>Jumlah</th>
-                    <th>Produk</th>
+                    <th>Number</th>
+
+                    <th>Nama Produk</th>
+                    <th>Kategori Produk</th>
+
                     <th>Aksi</th>
+                    <th>
+                    </th>
                   </tr>
                 </thead>
-                <!--  <tfoot>
-                    <tr>
-                        <th>Id Category Case</th>
-                        <th>Name Category</th>
-                        <th>Action</th>
-                       </tr>
-                    </tfoot> -->
-                <tbody>
 
+                <tbody>
                   <?php
                   $number = 0;
                   ?>
-                  <?php foreach ($data as $a) {
+                  <?php foreach ($produk as $a) {
                     $number++;
                   ?>
 
                     <tr>
+
                       <td><?php echo $number ?></td>
 
-                      <td><?php echo $a['bulan_penjualan'] ?></td>
-                      <td><?php echo $a['tahun_penjualan'] ?></td>
-                      <td><?php echo $a['jumlah'] ?></td>
                       <td><?php echo $a['nama_produk'] ?></td>
-                      <td><a href="<?php echo base_url('admin/admin/tampil_edit_category') ?>?id_penjualan=<?php echo $a['id_penjualan'] ?>" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
-                        <a href="<?php echo base_url('admin/aksi_admin/hapus_data_categories') ?>?id_penjualan=<?php echo $a['id_penjualan'] ?>&nama_produk=<?php echo $a['nama_produk'] ?>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                      <td><?php echo $a['kode_barang'] ?></td>
+
+                      <td><a href="<?php echo base_url('admin/c_produk/tampil_edit_produk') ?>?id_produk=<?php echo $a['id_produk'] ?>" class="btn btn-info"><i class="fas fa-info-circle"></i></a>
+                        <a href="<?php echo base_url('admin/c_produk/hapus_data_produk') ?>?id_produk=<?php echo $a['id_produk'] ?>" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+
+
                       </td>
+                      <td></td>
+
                     </tr>
                   <?php
                   }
@@ -90,13 +99,6 @@
         </div>
       </div>
       <!--Row-->
-      <button class="btn btn-primary btn-icon-split">
-        <span class="icon text-white-50">
-          <a href="<?php echo base_url('admin/admin/list_data_prediksi') ?>">
-            <i class="fas fa-arrow-right"></i>
-        </span>
-        <span class="text">Prediksi</span>
-      </button>
 
     </div>
     <!---Container Fluid-->
@@ -108,38 +110,29 @@
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
   </a>
-  <div class="modal fade" id="tambahmembers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <!-- modal tambah members -->
+  <div class="modal fade" id="tambahproduk" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Add New Category</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Produk
+
+          </h5>
         </div>
         <div class="modal-body">
-          <?php
-          foreach ($produk as $ct) {
-          ?>
-            <form action="<?php echo base_url('admin/aksi_admin/do_tambah_categories') ?>?&nama_produk=<?php echo $ct['nama_produk'] ?>" method="post">
-
-            <?php
-          }
-            ?>
+          <form action="<?php echo base_url('admin/c_produk/tambah_produk') ?>" method="post">
+            <div class="form-group">
+              <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Nama Produk" required="" name="nama_produk">
+            </div>
 
             <div class="form-group">
-              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Name Category" required="" name="bulan_penjualan">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Jumlah" required="" name="Jumlah">
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Select Division</label>
-              <select class="form-control" id="exampleFormControlSelect1" name="list_id_produk">
+              <label for="exampleFormControlSelect1"></label>
+              <select class="form-control" id="exampleFormControlSelect1" name="kode_barang">
+                <option value="">Pilih Kategori Produk</option>
                 <?php
-                foreach ($produk as $ct) {
+                foreach ($data_barang as $ct) {
                 ?>
-                  <option value="<?php echo $ct['id_produk'] ?>"><?php echo $ct['nama_produk'] ?></option>
+                  <option value="<?php echo $ct['kode_barang'] ?>"><?php echo $ct['kode_barang'] ?></option>
                 <?php
                 }
                 ?>
@@ -147,8 +140,12 @@
             </div>
 
 
+
         </div>
         <div class="modal-footer">
+          <a href=<?php echo base_url('admin/C_produk/tampil_import_produk') ?> class="btn btn-warning" style="padding-right:65px">
+            <i class="">Import Data From Excel</i>
+          </a>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Save changes</button>
         </div>
@@ -156,8 +153,14 @@
       </div>
     </div>
   </div>
-
 </body>
+
+<!-- <div class="form-group">
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Import Data From Excel</label>
+              </div>
+            </div> -->
 
 <script src="<?php echo base_url(); ?>assets/admin/vendor/jquery/jquery.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

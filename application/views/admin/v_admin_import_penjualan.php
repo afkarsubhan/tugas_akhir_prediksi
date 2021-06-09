@@ -27,7 +27,7 @@
     <!-- Container Fluid-->
     <div class="container-fluid" id="container-wrapper">
       <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Form Import Produk</h1>
+        <h1 class="h3 mb-0 text-gray-800">Form Import Penjualan</h1>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="<?php echo base_url('admin/c_produk/tampil_produk_all') ?>">Kembali ke Data Produk</a></li>
           <li class="breadcrumb-item active" aria-current="page">Forms update</li>

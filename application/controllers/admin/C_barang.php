@@ -19,7 +19,7 @@ class C_barang extends CI_Controller
         $ambil_data_barang['data_barang'] = $this->model_data->tampil_data('barang');
         $this->load->view('admin/v_admin_side_navbar', $ambil_data_barang);
         $this->load->view('admin/v_admin_top_navbar');
-        $this->load->view('admin/v_admin_data_barang');
+        $this->load->view('admin/v_admin_data_semuabarang');
     }
 
     function tampil_edit_barang()

@@ -15,17 +15,17 @@
   <link href="<?php echo base_url(); ?>assets/admin/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 </head>
 <style>
-.warna {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-}
+  .warna {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+  }
 </style>
 
 
@@ -115,8 +115,8 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Produk 
-          
+          <h5 class="modal-title" id="exampleModalCenterTitle">Tambah Produk
+
           </h5>
         </div>
         <div class="modal-body">
@@ -132,7 +132,7 @@
                 <?php
                 foreach ($data_barang as $ct) {
                 ?>
-                  <option value="<?php echo $ct['kode_barang'] ?>"><?php echo $ct['kode_barang'] ?></option>
+                  <option required="" value="<?php echo $ct['kode_barang'] ?>"><?php echo $ct['kode_barang'] ?></option>
                 <?php
                 }
                 ?>
@@ -143,9 +143,9 @@
 
         </div>
         <div class="modal-footer">
-        <a href=<?php echo base_url('admin/C_produk/tampil_import_produk') ?> class="btn btn-warning" style="padding-right:65px">
-                    <i class="">Import Data From Excel</i>
-            </a>
+          <a href=<?php echo base_url('admin/C_produk/tampil_import_produk') ?> class="btn btn-warning" style="padding-right:65px">
+            <i class="">Import Data From Excel</i>
+          </a>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary">Save changes</button>
         </div>

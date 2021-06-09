@@ -58,14 +58,14 @@ $number = 0;
                                 <tbody>
 
 
-                                    <?php foreach ($data as $a) {
+                                    <?php foreach ($penjualan as $a) {
                                         $number++;
                                     ?>
                                         <tr>
 
                                             <td><?php echo $number ?></td>
                                             <td><?php echo $a['bulan_penjualan'] ?></td>
-                                            <td><?php echo $a['jumlah'] ?></td>
+                                            <td><?php echo $a['jumlah_penjualan'] ?></td>
                                             <td><?php echo $tampil_periode[$number] ?></td>
                                             <td>
                                                 <?php
@@ -76,7 +76,7 @@ $number = 0;
                                             </td>
                                             <td>
                                                 <?php
-                                                $XY = $tampil_periode[$number] * $a['jumlah'];
+                                                $XY = $tampil_periode[$number] * $a['jumlah_penjualan'];
                                                 $totalXY = $totalXY + $XY;
                                                 echo $XY;
                                                 ?>
@@ -189,7 +189,7 @@ $number = 0;
                                 </thead>
                                 <tbody>
 
-                                    <?php foreach ($data as $a) {
+                                    <?php foreach ($penjualan as $a) {
                                         $number++;
                                     ?>
                                         <tr>

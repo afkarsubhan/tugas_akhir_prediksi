@@ -14,17 +14,6 @@ class Model_data extends CI_Model
 		return $data;
 	}
 
-	function data_produk_prediksi($where)
-	{
-		$this->db->select('*');
-		$this->db->from('produk');
-		$this->db->join('barang', 'barang.kode_barang=produk.kode_barang');
-		$this->db->where($where);
-		$query = $this->db->get();
-		$data = $query->result();
-		return $data;
-	}
-
 	function data_produk_all()
 	{
 		$this->db->select('*');
@@ -181,50 +170,64 @@ class Model_data extends CI_Model
 	{
 		$query = $this->db->get_where($table, $where);
 		return $query->result_array();
-	} 
+	}
 
 
-	function upload_file($filename){
+	function upload_file($filename)
+	{
 		$this->load->library('upload'); // Load librari upload
 		$config['upload_path'] = './excel/';
 		$config['allowed_types'] = 'xlsx';
 		$config['max_size']  = '2048';
 		$config['overwrite'] = true;
 		$config['file_name'] = $filename;
-	  
-		$this->upload->initialize($config); // Load konfigurasi uploadnya
-		if($this->upload->do_upload('file')){ // Lakukan upload dan Cek jika proses upload berhasil
-		  // Jika berhasil :
-		  $return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
-		  return $return;
-		}else{
-		  // Jika gagal :
-		  $return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
-		  return $return;
-		}
-	  }
-	  
-	  // Buat sebuah fungsi untuk melakukan insert lebih dari 1 data
-	function insert_multiple_produk($data){
-		$this->db->insert_batch('produk', $data);
-	  }
 
-	function insert_multiple_kode_barang($data){			
+		$this->upload->initialize($config); // Load konfigurasi uploadnya
+		if ($this->upload->do_upload('file')) { // Lakukan upload dan Cek jika proses upload berhasil
+			// Jika berhasil :
+			$return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
+			return $return;
+		} else {
+			// Jika gagal :
+			$return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
+			return $return;
+		}
+	}
+
+	// Buat sebuah fungsi untuk melakukan insert lebih dari 1 data
+	function insert_multiple_produk($data)
+	{
+		$this->db->insert_batch('produk', $data);
+	}
+
+	function insert_multiple_kode_barang($data)
+	{
 		$data_kode_barang = array();
-		foreach($data as $row){
+		foreach ($data as $row) {
 			$where = array(
 				'kode_barang' =>  $row
 			);
-	
-			$cek = $this->tampil_data_kondisi('barang', $where);			
-			if($cek == null){
-				array_push($data_kode_barang, array(                
-					'kode_barang'=>$row, // Insert data nama dari kolom B di excel
-				));       
-			}			
+
+			$cek = $this->tampil_data_kondisi('barang', $where);
+			if ($cek == null) {
+				array_push($data_kode_barang, array(
+					'kode_barang' => $row, // Insert data nama dari kolom B di excel
+				));
+			}
 		}
-		if($data_kode_barang != null){
+		if ($data_kode_barang != null) {
 			$this->db->insert_batch('barang', $data_kode_barang);
-		}		
+		}
+	}
+
+	function data_prediksi($id_produk, $prediksi_tahun, $prediksi_bulan)
+	{
+		$this->db->select('*');
+		$this->db->from('produk');
+		$this->db->join('barang', 'barang.kode_barang=produk.kode_barang');
+		$this->db->join('penjualan', 'penjualan.id_produk=produk.id_produk');
+		$query = $this->db->get();
+		$data = $query->result_array();
+		return $data;
 	}
 }

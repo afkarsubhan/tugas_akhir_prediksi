@@ -154,9 +154,6 @@
               <input type="text" class="form-control" name="jumlah_penjualan" aria-describedby="" required="" value="">
             </div>
             <div class="modal-footer">
-              <a href=<?php echo base_url('admin/C_penjualan/tampil_import_penjualan') ?> class="btn btn-warning" style="padding-right:35px">
-                <i class="">Import Data From Excel</i>
-              </a>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
               <button type="submit" class="btn btn-primary">Save changes</button>
             </div>
