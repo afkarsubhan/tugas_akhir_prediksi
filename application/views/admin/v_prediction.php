@@ -48,7 +48,8 @@ $number = 0;
                                     <tr>
                                         <th>Number</th>
                                         <!-- <th>Id Category Case</th> -->
-                                        <th>Name Category</th>
+                                        <th>Bulan Penjualan</th>
+                                        <th>Tahun Penjualan</th>
                                         <th>Jumlah Penjualan(Y)</th>
                                         <th>Periode(X)</th>
                                         <th>X^2</th>
@@ -65,6 +66,7 @@ $number = 0;
 
                                             <td><?php echo $number ?></td>
                                             <td><?php echo $a['bulan_penjualan'] ?></td>
+                                            <td><?php echo $a['tahun_penjualan'] ?></td>
                                             <td><?php echo $a['jumlah_penjualan'] ?></td>
                                             <td><?php echo $tampil_periode[$number] ?></td>
                                             <td>
@@ -182,6 +184,7 @@ $number = 0;
                                         <th>Number</th>
 
                                         <th>Bulan</th>
+                                        <th>Tahun</th>
                                         <th>a</th>
                                         <th>b</th>
                                         <th>a + b (x)</th>
@@ -189,13 +192,14 @@ $number = 0;
                                 </thead>
                                 <tbody>
 
-                                    <?php foreach ($penjualan as $a) {
+                                    <?php foreach ($data_prediction as $a) {                                        
                                         $number++;
                                     ?>
                                         <tr>
 
                                             <td><?php echo $number ?></td>
                                             <td><?php echo $a['bulan_penjualan'] ?></td>
+                                            <td><?php echo $a['tahun_penjualan'] ?></td>
                                             <td><?php echo $totalA ?></td>
                                             <td><?php echo $totalB ?></td>
                                             <td>
