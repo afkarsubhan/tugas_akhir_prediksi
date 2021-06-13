@@ -104,6 +104,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+
         <div class="modal-body">
 
           <form action="<?php echo base_url('admin/c_penjualan/do_tambah_penjualan') ?>" method="post">

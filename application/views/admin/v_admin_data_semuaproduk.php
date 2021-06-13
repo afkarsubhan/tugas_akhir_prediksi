@@ -122,7 +122,7 @@
         <div class="modal-body">
           <form action="<?php echo base_url('admin/c_produk/tambah_produk') ?>" method="post">
             <div class="form-group">
-              <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Nama Produk" required="" name="nama_produk">
+              <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Nama Produk" required="" name="nama_produk" required>
             </div>
 
             <div class="form-group">
@@ -132,7 +132,7 @@
                 <?php
                 foreach ($data_barang as $ct) {
                 ?>
-                  <option required="" value="<?php echo $ct['kode_barang'] ?>"><?php echo $ct['kode_barang'] ?></option>
+                  <option required value="<?php echo $ct['kode_barang'] ?>"><?php echo $ct['kode_barang'] ?></option>
                 <?php
                 }
                 ?>

@@ -23,11 +23,6 @@
       </a>
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">
-        <a class="nav-link" href="<?php echo base_url('admin/admin') ?>">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Dashboard</span></a>
-      </li>
-      <li class="nav-item active">
         <a class="nav-link" href="<?php echo base_url('admin/C_prediksi/list_data_selectionprediksi') ?>">
           <i class="fas fa-fw fa-chart-area"></i>
           <span>Prediction</span></a>
@@ -46,6 +41,11 @@
         <a class="nav-link" href="<?php echo base_url('admin/c_produk/tampil_produk_all') ?>">
           <i class="fas fa-fw fa-columns"></i>
           <span>Produk</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="<?php echo base_url('admin/C_prediksi/grafik') ?>">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>grafik</span></a>
       </li>
       <hr class="sidebar-divider">
       <div class="sidebar-heading">

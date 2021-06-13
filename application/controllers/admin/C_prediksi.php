@@ -3,6 +3,7 @@
 class C_prediksi extends CI_Controller
 {
 
+
     function list_data_prediksi()
     {
         $id_produk = $this->input->post('pilih_produk');
@@ -52,5 +53,15 @@ class C_prediksi extends CI_Controller
         );
         $data = $this->model_data->data_produk($where);
         echo json_encode($data);
+    }
+    function grafik()
+    {
+
+        $ambil_data['penjualan'] = $this->model_data->tampil_data('penjualan');
+        $ambil_data_barang['data_barang'] = $this->model_data->tampil_data('barang');
+
+        $this->load->view('admin/v_admin_side_navbar', $ambil_data_barang);
+        $this->load->view('admin/v_admin_top_navbar');
+        $this->load->view('admin/grafik', $ambil_data);
     }
 }
