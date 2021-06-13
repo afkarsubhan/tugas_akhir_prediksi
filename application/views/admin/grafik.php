@@ -31,8 +31,7 @@
 
                             foreach ($penjualan as $a) {
                                 $tahun_penjualan[] = $a['tahun_penjualan']; //ambil bulan
-                                $jumlah_penjualan[] = $a['jumlah_penjualan']; //ambil bulan
-
+                                $jumlah_penjualan[] = intval($a['jumlah_penjualan']); //ambil bulan
 
                             }
 
@@ -63,62 +62,57 @@
 
     <script type="text/javascript">
         Highcharts.chart('grafik', {
-
+            chart: {
+                type: 'areaspline'
+            },
             title: {
-                text: 'Solar Employment Growth by Sector, 2010-2016'
+                text: 'Grafik Peramalan Penjualan'
             },
 
             subtitle: {
-                text: 'Source: thesolarfoundation.com'
+                text: 'Toko 99 Blitar'
             },
 
-            yAxis: {
-                title: {
-                    text: 'Number of Employees'
-                }
-            },
-
-            xAxis: {
-                accessibility: {
-                    rangeDescription: 'Range: 2010 to 2021'
-                }
-            },
 
             legend: {
                 layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle'
+                align: 'left',
+                verticalAlign: 'top',
+                x: 1000,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
             },
-
-            plotOptions: {
-                series: {
-                    label: {
-                        connectorAllowed: false
-                    },
-                    pointStart: 2010
+            xAxis: {
+                categories: <?= json_encode($tahun_penjualan); ?>,
+                plotBands: [{ // visualize the weekend
+                    from: 30,
+                    to: 35,
+                    color: 'rgba(68, 170, 213, .2)'
+                }]
+            },
+            yAxis: {
+                title: {
+                    text: 'Fruit units'
                 }
             },
-
+            tooltip: {
+                shared: true,
+                valueSuffix: ' units'
+            },
+            credits: {
+                enabled: false
+            },
+            plotOptions: {
+                areaspline: {
+                    fillOpacity: 0.5
+                }
+            },
             series: [{
-                name: 'Produk',
+                name: 'Jane',
                 data: <?= json_encode($jumlah_penjualan); ?>
-            }],
-
-            responsive: {
-                rules: [{
-                    condition: {
-                        maxWidth: 500
-                    },
-                    chartOptions: {
-                        legend: {
-                            layout: 'horizontal',
-                            align: 'center',
-                            verticalAlign: 'bottom'
-                        }
-                    }
-                }]
-            }
-
+            }]
         });
     </script>
 
