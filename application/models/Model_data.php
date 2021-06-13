@@ -70,16 +70,34 @@ class Model_data extends CI_Model
 		return $result->result_array()[0]['total'];
 	}
 
-	function jumlahPenjualan_row()
+	function jumlahPenjualan_byId($id_produk)
 	{
-		$sql = "SELECT * FROM penjualan";
+		$sql = "SELECT sum(jumlah_penjualan) as total FROM penjualan WHERE id_produk = " .$id_produk;
+		$result = $this->db->query($sql);
+		return $result->result_array()[0]['total'];
+	}
+
+	function jumlahPenjualan_row($id_produk)
+	{
+		$sql = "SELECT * FROM penjualan WHERE id_produk = " .$id_produk;
 		$query = $this->db->query($sql);
 		return $query->num_rows();
 	}
 
-	function mencariperiode()
+	function getLastPenjualan($id_produk)
 	{
-		$sql = "SELECT * FROM penjualan";
+		$sql = "SELECT bulan_penjualan , tahun_penjualan FROM penjualan WHERE id_produk = " .$id_produk . " ORDER BY id_penjualan DESC LIMIT 1";
+		$result = $this->db->query($sql);
+		return $result->result_array()[0];
+	}
+
+	function mencariperiode($id_produk = FALSE)
+	{
+		if($id_produk == FALSE){
+			$sql = "SELECT * FROM penjualan";
+		} else {
+			$sql = "SELECT * FROM penjualan WHERE id_produk = " .$id_produk;
+		}		
 		$query = $this->db->query($sql);
 		$totalrow = $query->num_rows();
 
@@ -229,5 +247,28 @@ class Model_data extends CI_Model
 		$query = $this->db->get();
 		$data = $query->result_array();
 		return $data;
+	}
+
+	function convert_month($month){				
+		if($month == 'Januari')
+			return $month = "January";
+		else if($month == "Februari")
+			return $month = "February";		
+		else if($month == "Maret")
+			return $month = "March";		
+		else if($month == "Mei")
+			return $month = "May";
+		else if($month == "Juni")
+			return $month = "June";
+		else if($month == "Juli")
+			return $month = "July";						
+		else if($month == "Agustus")
+			return $month = "August";	
+		else if($month == "Oktober")
+			return $month = "October";
+		else if($month == 'Desember')
+			return $month = "December";						
+		else 
+			return $month;
 	}
 }

@@ -54,9 +54,9 @@
                                         <div class="col">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Name Produk</label>
-                                                <select class="form-control" id="pilih_produk" name="pilih_produk" disabled>
+                                                <select class="form-control" id="pilih_produk" name="pilih_produk_all" disabled>
                                                     <option value="">Pilih Produk</option>
-                                                    <?php
+                                                    <?php                                                    
                                                     foreach ($produk as $ct) {
                                                     ?>
                                                         <option value="<?php echo $ct['id_produk'] ?>"><?php echo $ct['nama_produk'] ?></option>
@@ -158,6 +158,11 @@
 
                     }
                 });
+            });
+
+            $('#pilih_produk').change(function() {
+                var id = $(this).val();
+                console.log("Masukkk ", id);
             });
         });
     </script>
