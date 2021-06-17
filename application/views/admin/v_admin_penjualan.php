@@ -109,7 +109,7 @@
           <form action="<?php echo base_url('admin/c_penjualan/do_tambah_penjualan') ?>" method="post">
             <div class="form-group">
               <label for="exampleFormControlSelect1">Pilih Produk</label>
-              <select class="form-control" id="exampleFormControlSelect1" name="id_produk">
+              <select class="form-control" id="id_produk" name="id_produk">
                 <?php
                 foreach ($produk as $b) {
                 ?>
@@ -121,8 +121,8 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Bulan Penjualan</label>
-              <select class="select2-single form-control" name="bulan_penjualan" id="select2Single">
-                <option value=Januari>Januari</option>
+              <select class="select2-single form-control" name="bulan_penjualan" id="bulan_penjualan" disabled>
+                <option value=>Pilih Bulan Penjualan</option>
                 <option value=Februari>Februari</option>
                 <option value=Maret>Maret</option>
                 <option value=April>April</option>
@@ -138,8 +138,8 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Tahun Penjualan</label>
-              <select class="select2-single-placeholder form-control" id="exampleFormControlSelect1" name="tahun_penjualan">
-                <label for="exampleInputEmail1">Tahun Penjualan</label>
+              <select class="select2-single-placeholder form-control" id="tahun_penjualan" name="tahun_penjualan" disabled>
+                <option value=>Pilih Tahun Penjualan</option>
                 <option value=2016>2016</option>
                 <option value=2017>2017</option>
                 <option value=2018>2018</option>
@@ -151,7 +151,7 @@
 
             <div class="form-group">
               <label for="exampleInputEmail1">Jumlah Karton</label>
-              <input type="text" class="form-control" name="jumlah_penjualan" aria-describedby="" required="" value="">
+              <input type="text" class="form-control" name="jumlah_penjualan" aria-describedby="" id="jumlah_penjualan" disabled>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -178,6 +178,21 @@
   $(document).ready(function() {
     $('#dataTable').DataTable(); // ID From dataTable 
     $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+  });
+  $('#id_produk', ).change(function() {
+
+    $('#bulan_penjualan').prop("disabled", false);
+
+  });
+  $('#bulan_penjualan', ).change(function() {
+
+    $('#tahun_penjualan').prop("disabled", false);
+
+  });
+  $('#tahun_penjualan', ).change(function() {
+
+    $('#jumlah_penjualan').prop("disabled", false);
+
   });
 </script>
 </body>

@@ -21,15 +21,16 @@
         <div class="container-fluid" id="container-wrapper">
 
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-12">
                     <!-- Form Basic -->
-                    <div class="card mb-4">
+                    <div class="card mb-8">
                         <div class="card-body">
                             <div id="grafik"></div>
 
                             <?php
 
                             foreach ($penjualan as $a) {
+                                $bulan_penjualan[] = $a['bulan_penjualan']; //ambil bulan
                                 $tahun_penjualan[] = $a['tahun_penjualan']; //ambil bulan
                                 $jumlah_penjualan[] = intval($a['jumlah_penjualan']); //ambil bulan
 
@@ -72,18 +73,6 @@
             subtitle: {
                 text: 'Toko 99 Blitar'
             },
-
-
-            legend: {
-                layout: 'vertical',
-                align: 'left',
-                verticalAlign: 'top',
-                x: 1000,
-                y: 100,
-                floating: true,
-                borderWidth: 1,
-                backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF'
-            },
             xAxis: {
                 categories: <?= json_encode($tahun_penjualan); ?>,
                 plotBands: [{ // visualize the weekend
@@ -94,12 +83,12 @@
             },
             yAxis: {
                 title: {
-                    text: 'Fruit units'
+                    text: 'Jumlah Karton'
                 }
             },
             tooltip: {
                 shared: true,
-                valueSuffix: ' units'
+                valueSuffix: ' Karton'
             },
             credits: {
                 enabled: false

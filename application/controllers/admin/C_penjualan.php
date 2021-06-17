@@ -98,10 +98,17 @@ class C_penjualan extends CI_Controller
         $tahun_penjualan = $this->input->post('tahun_penjualan');
         $jumlah_penjualan = $this->input->post('jumlah_penjualan');
         $id_produk = $this->input->post('id_produk');
+        $id_produk = $this->get_produk_by_nama_produk($id_produk);
+
+
         $where = array(
 
             'id_produk' =>  $id_produk
         );
+
+        // echo "<pre>";
+        // print_r($id_produk);
+        // exit;
 
         $data_insert = array(
             'bulan_penjualan' => $bulan_penjualan,
@@ -206,5 +213,14 @@ class C_penjualan extends CI_Controller
         $this->model_data->insert_multiple_kode_barang($unique_kode_barang);
 
         redirect("admin/C_penjualan/tampil_penjualan_all"); // Redirect ke halaman awal 
+    }
+    function get_produk_by_nama_produk($nama_produk)
+    {
+        $where = array(
+            'produk.nama_produk' =>  $nama_produk
+        );
+        $data = $this->model_data->data_produk($where);
+        // echo json_encode($data);
+        return $data[0]['id_produk'];
     }
 }

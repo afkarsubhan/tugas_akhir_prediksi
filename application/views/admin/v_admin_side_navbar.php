@@ -47,6 +47,11 @@
           <i class="fas fa-fw fa-chart-area"></i>
           <span>grafik</span></a>
       </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="<?php echo base_url('admin/C_prediksi/pdf') ?>">
+          <i class="fas fa-fw fa-chart-area"></i>
+          <span>pdf</span></a>
+      </li>
       <hr class="sidebar-divider">
       <div class="sidebar-heading">
         Kategori Produk

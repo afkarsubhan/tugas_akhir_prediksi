@@ -56,7 +56,7 @@
                                                 <label for="exampleInputEmail1">Name Produk</label>
                                                 <select class="form-control" id="pilih_produk" name="pilih_produk_all" disabled>
                                                     <option value="">Pilih Produk</option>
-                                                    <?php                                                    
+                                                    <?php
                                                     foreach ($produk as $ct) {
                                                     ?>
                                                         <option value="<?php echo $ct['id_produk'] ?>"><?php echo $ct['nama_produk'] ?></option>
@@ -74,7 +74,7 @@
                                             <div class="form-group">
                                                 <div class="col">
                                                     <label for="exampleFormControlSelect1">Prediksi Tahun</label>
-                                                    <select class="form-control" id="prediksi_tahun" name="prediksi_tahun">
+                                                    <select class="form-control" id="prediksi_tahun" name="prediksi_tahun" disabled>
                                                         <option value=>Pilih Tahun</option>
                                                         <option value=2021>2021</option>
                                                         <option value=2022>2022</option>
@@ -89,7 +89,7 @@
                                             <div class="form-group">
                                                 <div class="col">
                                                     <label for="exampleFormControlSelect1">Prediksi Bulan</label>
-                                                    <select class="form-control" id="prediksi_bulan" name="prediksi_bulan">>
+                                                    <select class="form-control" id="prediksi_bulan" name="prediksi_bulan" disabled>
                                                         <option value=>Pilih Bulan</option>
                                                         <option value=Januari>Januari</option>
                                                         <option value=Februari>Februari</option>
@@ -137,7 +137,7 @@
 
     <script>
         $(document).ready(function() {
-            $('#pilih_kategori').change(function() {
+            $('#pilih_kategori', ).change(function() {
                 var id = $(this).val();
                 $.ajax({
                     url: "<?php echo base_url(); ?>admin/C_prediksi/get_produk_by_kode_barang",
@@ -155,14 +155,19 @@
                             html += '<option>' + data[i].nama_produk + '</option>';
                         }
                         $('#pilih_produk').html(html);
-
                     }
                 });
             });
 
-            $('#pilih_produk').change(function() {
-                var id = $(this).val();
-                console.log("Masukkk ", id);
+            $('#pilih_produk', ).change(function() {
+
+                $('#prediksi_tahun').prop("disabled", false);
+
+            });
+            $('#prediksi_tahun', ).change(function() {
+
+                $('#prediksi_bulan').prop("disabled", false);
+
             });
         });
     </script>

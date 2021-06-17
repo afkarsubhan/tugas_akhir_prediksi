@@ -121,13 +121,11 @@
         </div>
         <div class="modal-body">
           <form action="<?php echo base_url('admin/c_produk/tambah_produk') ?>" method="post">
-            <div class="form-group">
-              <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Nama Produk" required="" name="nama_produk" required>
-            </div>
+
 
             <div class="form-group">
               <label for="exampleFormControlSelect1"></label>
-              <select class="form-control" id="exampleFormControlSelect1" name="kode_barang">
+              <select class="form-control" id="pilih_kategori" name="kode_barang">
                 <option value="">Pilih Kategori Produk</option>
                 <?php
                 foreach ($data_barang as $ct) {
@@ -137,6 +135,10 @@
                 }
                 ?>
               </select>
+            </div>
+
+            <div class="form-group">
+              <input type="text" class="form-control" id="nama_produk" placeholder="Nama Produk" required="" name="nama_produk" disabled>
             </div>
 
 
@@ -155,13 +157,6 @@
   </div>
 </body>
 
-<!-- <div class="form-group">
-              <div class="custom-file">
-                <input type="file" class="custom-file-input" id="customFile">
-                <label class="custom-file-label" for="customFile">Import Data From Excel</label>
-              </div>
-            </div> -->
-
 <script src="<?php echo base_url(); ?>assets/admin/vendor/jquery/jquery.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/admin/vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -175,6 +170,11 @@
   $(document).ready(function() {
     $('#dataTable').DataTable(); // ID From dataTable 
     $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+    $('#pilih_kategori', ).change(function() {
+
+      $('#nama_produk').prop("disabled", false);
+
+    });
   });
 </script>
 

@@ -39,7 +39,7 @@ class Login extends CI_Controller
             // print_r($data_session);die();
 
 
-            redirect('admin/admin');
+            redirect('admin/C_penjualan');
         } else {
             $this->session->set_flashdata('error', 'username atau password salah');
             redirect('login');

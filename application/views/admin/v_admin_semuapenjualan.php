@@ -16,7 +16,6 @@
 </head>
 
 
-
 <body id="page-top">
   <div id="wrapper">
     <!-- Container Fluid-->
@@ -36,6 +35,7 @@
         <!-- DataTable with Hover -->
         <div class="col-lg-12">
           <div class="card mb-4">
+
             <div class="table-responsive p-3">
               <table class="table align-items-center table-flush table-hover" id="dataTableHover">
                 <thead class="thead-light">
@@ -107,10 +107,25 @@
 
         <div class="modal-body">
 
-          <form action="<?php echo base_url('admin/c_penjualan/do_tambah_penjualan') ?>" method="post">
+          <form action="<?php echo base_url('admin/c_penjualan/do_tambah_penjualan') ?>" method="post" id="check">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Kategori Barang</label>
+              <select class="form-control" id="pilih_kategori" name="list_id_kategori">
+                <option value="">Pilih Kategori Barang</option>
+                <?php
+                foreach ($data_barang as $ct) {
+                ?>
+                  <option value="<?php echo $ct['kode_barang'] ?>"><?php echo $ct['kode_barang'] ?></option>
+                <?php
+                }
+                ?>
+              </select>
+            </div>
+
             <div class="form-group">
               <label for="exampleFormControlSelect1">Pilih Produk</label>
-              <select class="form-control" id="exampleFormControlSelect1" name="id_produk">
+              <select class="form-control" id="id_produk" name="id_produk" disabled>
+                <option value="">Pilih Produk</option>
                 <?php
                 foreach ($produk as $b) {
                 ?>
@@ -118,11 +133,14 @@
                 <?php
                 }
                 ?>
+
               </select>
             </div>
+
             <div class="form-group">
               <label for="exampleInputEmail1">Bulan Penjualan</label>
-              <select class="select2-single form-control" name="bulan_penjualan" id="select2Single">
+              <select class="select2-single form-control" name="bulan_penjualan" id="bulan_penjualan" disabled>
+                <option value=>Pilih Bulan Penjualan</option>
                 <option value=Januari>Januari</option>
                 <option value=Februari>Februari</option>
                 <option value=Maret>Maret</option>
@@ -139,8 +157,8 @@
             </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Tahun Penjualan</label>
-              <select class="select2-single-placeholder form-control" id="exampleFormControlSelect1" name="tahun_penjualan">
-                <label for="exampleInputEmail1">Tahun Penjualan</label>
+              <select class="select2-single-placeholder form-control" id="tahun_penjualan" name="tahun_penjualan" disabled>
+                <option value=>Pilih Tahun Penjualan</option>
                 <option value=2016>2016</option>
                 <option value=2017>2017</option>
                 <option value=2018>2018</option>
@@ -152,14 +170,14 @@
 
             <div class="form-group">
               <label for="exampleInputEmail1">Jumlah Karton</label>
-              <input type="text" class="form-control" name="jumlah_penjualan" aria-describedby="" required="" value="">
+              <input type="text" onkeyup="angka(this);" class="form-control" name="jumlah_penjualan" id="jumlah_penjualan" disabled>
             </div>
             <div class="modal-footer">
               <a href=<?php echo base_url('admin/C_penjualan/tampil_import_penjualan') ?> class="btn btn-warning" style="padding-right:35px">
                 <i class="">Import Data From Excel</i>
               </a>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="submit" id="button_save" class="btn btn-primary" disabled>Save changes</button>
             </div>
           </form>
         </div>
@@ -179,11 +197,75 @@
 
 <!-- Page level custom scripts -->
 <script>
+  function angka(e) {
+    if (!/^[0-9]+$/.test(e.value)) {
+      e.value = e.value.substring(0, e.value.length - 1);
+    }
+  }
+
   $(document).ready(function() {
+
+
+
     $('#dataTable').DataTable(); // ID From dataTable 
     $('#dataTableHover').DataTable(); // ID From dataTable with Hover
+    $('#pilih_kategori', ).change(function() {
+      var id = $(this).val();
+      $.ajax({
+        url: "<?php echo base_url(); ?>admin/C_prediksi/get_produk_by_kode_barang",
+        method: "POST",
+        data: {
+          id: id
+        },
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          $('#id_produk').prop("disabled", false);
+          var html = '';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option>' + data[i].nama_produk + '</option>';
+          }
+          $('#id_produk').html(html);
+        }
+      });
+    });
+
+    $('#id_produk', ).change(function() {
+
+      $('#bulan_penjualan').prop("disabled", false);
+
+    });
+    $('#bulan_penjualan', ).change(function() {
+
+      $('#tahun_penjualan').prop("disabled", false);
+
+    });
+    $('#tahun_penjualan', ).change(function() {
+
+      $('#jumlah_penjualan').prop("disabled", false);
+
+    });
+
+    $('#jumlah_penjualan', ).change(function() {
+
+      $('#button_save').prop("disabled", false);
+    });
+
+    $('form > input#check').keyup(function() {
+      var empty = false;
+      $('form > input').each(function() {
+        if ($(this).val() == '') {
+          empty = true;
+        }
+      });
+      if (empty) {
+        $('#button_save').attr('disabled', 'disabled');
+      } else {
+        $('#button_save').removeAttr('disabled');
+      }
+    });
   });
 </script>
-</body>
 
 </html>
