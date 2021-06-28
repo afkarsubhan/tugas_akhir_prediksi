@@ -57,6 +57,16 @@ class C_penjualan extends CI_Controller
         $this->load->view('admin/v_admin_top_navbar');
         $this->load->view('admin/v_admin_editpenjualan', $ambil_data);
     }
+
+    function exportPDF()
+    {        
+        $this->load->library('pdf');
+        $ambil_data['penjualan'] = $this->model_data->data_penjualan_all();                
+        $html = $this->load->view('admin/v_admin_semuapenjualan', $ambil_data, true);
+        $this->pdf->createPDF($html, 'mypdf', false);
+        echo json_encode("Sukses");
+    }
+
     function hapus_data_penjualan()
     {
         $id_penjualan = $this->input->get('id_penjualan');

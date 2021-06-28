@@ -29,6 +29,17 @@
           <span class="text">Tambah Penjualan</span>
         </button>
 
+        <!-- <button class="btn btn-primary btn-icon-split" type="button" id="btnExport" onclick="exportPDF()">
+          <span class="icon text-white-50">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+          <span class="text">Export Penjualan</span>
+        </button> -->
+      
+        <form method="" action="<?php  echo base_url("/admin/c_penjualan/exportPDF"); ?>">
+          <button id="submit-buttons" type="submit" ​​​​​>Submit 1</button>
+        </form>
+
       </div>
       <!-- Row -->
       <div class="row">
@@ -204,9 +215,6 @@
   }
 
   $(document).ready(function() {
-
-
-
     $('#dataTable').DataTable(); // ID From dataTable 
     $('#dataTableHover').DataTable(); // ID From dataTable with Hover
     $('#pilih_kategori', ).change(function() {
@@ -229,7 +237,7 @@
           $('#id_produk').html(html);
         }
       });
-    });
+    });    
 
     $('#id_produk', ).change(function() {
 
@@ -266,6 +274,18 @@
       }
     });
   });
+
+  function exportPDF(){
+      console.log("Export PDF");
+      $.ajax({
+        url: "<?php echo base_url(); ?>admin/C_penjualan/exportPDF",
+        method: "POST",        
+        async: false,        
+        success: function(data) {
+         console.log(data);
+        }
+      });
+    }
 </script>
 
 </html>
